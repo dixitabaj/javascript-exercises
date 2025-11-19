@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock Paper Scissors</title>
+    </head>
+
+    <body>
+        <script>
+            function pickComputerMove(){
+
+                let computerMove='';
+                const random=Math.random()
+                if (random<=1/3 && random>0){
+                    computerMove='Rock';
+                }
+                else if (random>=1/3 && random>2/3){
+                    computerMove='Paper'
+                }
+                else{
+                    computerMove='Scissors'
+                }
+                return computerMove
+            }
+            function playMove(playerMove){
+                computerMove=pickComputerMove()
+                let result='';
+
+                if (playerMove===computerMove){
+                    result='tie';
+                }
+                else if (
+                (playerMove === 'Rock' && computerMove === 'Scissors') ||
+                (playerMove === 'Paper' && computerMove === 'Rock') ||
+                (playerMove === 'Scissors' && computerMove === 'Paper')
+            ) {
+                result = 'You won!';
+            } else {
+                result = 'You lost!';
+            }
+
+            alert(`You picked ${playerMove}. Computer picked ${computerMove}. ${result}`);
+        }
+        </script>
+        <p>Rock Paper Scissors</p>
+        <button onclick="playMove('Rock')">Rock</button>
+        <button onclick="playMove('Paper')" >Paper</button>
+        <button onclick="playMove('Scissor')">Rock</button>
+    </body>
+    <script>
+    </script>
+</html>

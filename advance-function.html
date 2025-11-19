@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+<button onclick="" class="btn">click</button>
+    </body>
+    <script>
+        // function greeting(){
+        //     console.log('hello');
+        // }
+        // const function1=function (){ //anonymous function
+        //     console.log('hello1');
+        // };
+        // console.log(function1);
+        // console.log(typeof function1);
+        // function1();
+
+        // const object1={ 
+        //     num:1,
+        //     fun: function (){
+        //     console.log('hello');
+        // }
+        // }
+        // object1.fun();
+
+        // function display(num){
+        //     console.log(`${num}`);
+        // }
+        // display(2);
+        // setTimeout(function(){
+        //     console.log('timeout');
+        // }, 3000);
+        // setInterval(function(){
+        //     console.log('interval');
+        // }, 3020);
+        // console.log('next');// this line is displayed first cause setTimeout sets a time for 3s in that 3 s it run other code, also called asunchronous code
+    //    ['wash dishes', 'watch youtube'].forEach((value, index) => {
+    //         if (value==='wash dishes'){
+    //             return; // skips wash dishes and goes to next one
+    //         console.log(index);
+    //         console.log(value);
+    //    }});
+
+    //    const arrowFunction = () => {
+    //     console.log('hello');
+    //    };
+    //    arrowFunction();
+
+    //    const oneParam =param => {
+    //         console.log(param +1);
+    //    };
+    //    oneParam(1);
+
+    //    const object2= {
+    //     method: () => {
+
+    //     },
+
+    //    }
+    // const function2=() => {
+    //     console.log("click")
+    // };
+    // const function3=() => {
+    //     console.log("click")
+    // };
+    // const buttonElement=document.querySelector('.btn');
+    // buttonElement.addEventListener('click',function2);
+    // buttonElement.addEventListener('click',function3);
+    // buttonElement.removeEventListener('click', function2);
+
+    console.log([1, 2, 5].filter((value, index)=> {
+        if (value>=0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }));
+    console.log([1, 2, 3].map((value)=>{
+        value=value*2;
+        return value;
+    }));
+           </script>
+</html>

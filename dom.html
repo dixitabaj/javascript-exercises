@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rock Paper Scissors</title>
+  </head>
+  <body>
+    <button class="subscribe" onclick="
+      const buttonElement=document.querySelector('.subscribe');
+      if (buttonElement.innerHTML==='Subscribe'){
+        buttonElement.innerHTML='Subscribed';
+      }
+      else{
+        buttonElement.innerHTML='Subscribe';
+      }
+    ">Subscribe</button>
+    <p>Amazon shipping calculator</p>
+    <input class="cost-input"placeholder="Cost of placeholder" onkeydown="console.log(event.key)
+    if (event.key === 'Enter'){
+        calulate();
+    }">
+    <button onclick="calulate()">calculator</button>
+    <p class="cost"></p>
+    <script>
+        function calulate(){
+            const inputElement=document.querySelector('.cost-input');
+            let cost=Number(inputElement.value);
+            console.log(cost);
+
+            if (cost<40){
+                cost=cost+10;
+                console.log(cost);
+                document.querySelector('.cost').innerHTML=cost;
+            }
+
+        }
+    </script>
+  </body>
+</html>
+

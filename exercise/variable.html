@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Calculator</title>
+</head>
+<body>
+    <p class="display"></p>
+
+    <p>
+    <button onclick="
+    calc+='1'
+    update()
+    ">1</button>
+
+    <button onclick="
+    calc+='2'
+    update()
+    ">2</button>
+
+    <button onclick="
+    calc+='3'
+    update()
+    ">3</button>
+
+    <button onclick="
+    calc+='+'
+    update()
+    ">+</button>
+    </p>
+
+    <p>
+    <button onclick="
+    calc+='4'
+    update()
+    ">4</button>
+
+    <button onclick="
+    calc+='5'
+    update()
+    ">5</button>
+
+    <button onclick="
+    calc+='6'
+    update()
+    ">6</button>
+
+    <button onclick="
+    calc+='-'
+    update()
+    ">-</button>
+    </p>
+
+    <p>
+    <button onclick="
+    calc+='7'
+    update()
+    ">7</button>
+
+    <button onclick="
+    calc+='8'
+    update()
+    ">8</button>
+
+    <button onclick="
+    calc+='9'
+    update()
+    ">9</button>
+
+    <button onclick="
+    calc+='*'
+    update()
+    ">*</button>
+    </p>
+
+    <p>
+    <button onclick="
+    calc+='0'
+    update()
+    ">0</button>
+
+    <button onclick="
+    calc+='.'
+    update()
+    ">.</button>
+
+    <button onclick="
+    try{
+    calc=eval(calc)
+    }catch(e){calc='err'}
+    update()
+    ">=</button>
+
+    <button onclick="
+    calc+='/'
+    update()
+    ">/</button>
+    </p>
+
+    <p>
+    <button onclick="
+    calc=''
+    update()
+    ">clear</button>
+    </p>
+
+    <script>
+    let calc=''
+    function update(){
+    document.querySelector('.display').innerHTML=calc
+    }
+</script>
+</body>
+</html>
