@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>TodoList Practice</p>
+    <input placeholder="Enter" class="task-input" />
+    <input type="date" class="date-input">
+    <button class="add-btn"  class="add-btn">Add</button>
+    <p class="show"></p>
+
+    <script>
+
+      const todoList = [{
+        name: 'make dinner',
+        dueDate: '2025-09-34'
+      }];
+      show();
+
+      document.querySelector('.add-btn').addEventListener('click', ()=> {
+        addTask();
+        show();
+      })
+      function addTask() {
+        const inputElement = document.querySelector('.task-input');
+        const task1 = inputElement.value.trim(); // remove spaces
+        const dateElement=document.querySelector('.date-input')
+        const date=dateElement.value;
+        if (task1 === '') return; // ignore empty input
+
+        todoList.push({name:task1,
+            dueDate: date
+        });
+        console.log(todoList);
+
+        inputElement.value = ''; // reset input
+        dateElement.value='';
+        show(); // show updated list
+      }
+
+      function show() {
+        let todoListHTML = '';
+
+
+        // for (let i = 0; i < todoList.length; i++) {
+        todoList.forEach((todoObject, index) => {
+        //   const todoObject = todoList[i];
+          const name=todoObject.name;
+          const dueDate=todoObject.dueDate;
+          const html = `
+          <p>
+            ${name} ${dueDate} 
+            <button 
+            class="delete-btn">Delete</button>
+            </p>
+
+          `;
+          todoListHTML += html;
+      });
+    
+        document.querySelector('.show').innerHTML = todoListHTML; // update UI
+      document.querySelectorAll('.delete-btn').forEach((value, index)=> {
+        value.addEventListener('click', ()=> {
+          todoList.splice(index, 1);
+          show();
+        })
+      });
+    }
+   
+    </script>
+  </body>
+</html>
