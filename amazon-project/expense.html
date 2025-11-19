@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <style>
+    /* Reset some default margins */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f9fafc;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+h1 {
+  color: #1d3557;
+  margin-bottom: 20px;
+}
+
+.expense-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.expense-form input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  min-width: 150px;
+}
+
+.expense-form input:focus {
+  border-color: #1d3557;
+}
+
+#add-btn {
+  background-color: #1d3557;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#add-btn:hover {
+  background-color: #457b9d;
+}
+
+h2 {
+  margin: 15px 0;
+}
+
+table {
+  width: 90%;
+  max-width: 800px;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+th {
+  background: #1d3557;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background: #f1f1f1;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+canvas {
+  margin-top: 30px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#export-btn {
+  margin-top: 15px;
+  background-color: #1d3557;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+}
+
+#export-btn:hover {
+  background-color: #457b9d;
+}
+
+  </style>
+</head>
+<body>
+  <h1>Expense Tracker</h1>
+
+  <section class="expense-form">
+    <input type="text" id="name" placeholder="Expense name">
+    <input type="number" id="amount" placeholder="Amount">
+    <input type="text" id="category" placeholder="Category">
+    <input type="date" id="date">
+    <button id="add-btn" onclick="addExpense()">Add Expense</button>
+  </section>
+
+  <h2>Total Spent: Rs.<span id="total">0</span></h2>
+
+  <section class="expense-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </section>
+
+  <canvas id="chart" width="400" height="200"></canvas>
+  <button id="export-btn">Export as CSV</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script >
+    window.onload=()=>{
+        display();
+    }
+    
+    const expense=[{
+        name:"abc",
+        amount: 123,
+        category: "abc",
+        date: "2025-09-14"
+    }]
+    function addExpense(){
+        const name=document.querySelector('#name').value;
+        const amount=document.querySelector('#amount').value;
+        const category=document.querySelector('#category').value;
+        const date=document.querySelector('#date').value;
+        
+            expense.push({
+                name:name,
+                amount:amount,
+                category:category,
+                date:date
+            })
+            console.log(expense);
+        
+    
+    display();
+}
+function display(){
+    tableHtml='';
+    expense.forEach((expenses, index)=>{
+        tableHtml+=`
+         <tr>
+        <td>${expenses.name}</td>
+        <td>${expenses.amount}</td>
+        <td>${expenses.category}</td>
+        <td>${expenses.date}</td>
+        <td><button onclick="deleteExp(${index})">delete</button></td>
+        </tr>`
+        document.querySelector('#table-body').innerHTML=tableHtml;
+        totalExp();
+        renderChart();
+}
+
+
+);
+}
+function totalExp()
+{
+    totalSpent=0;
+    expense.forEach((expenses)=>{
+        
+        totalSpent+=parseInt(expenses.amount);
+        console.log(totalSpent);
+        document.querySelector('#total').innerHTML=totalSpent;
+    })
+}
+
+function deleteExp(index){
+    expense.splice(index, 1);
+    localStorage.setItem("expenses", JSON.stringify(expense));
+    display();
+    totalExp();
+    renderChart();
+}
+let chartInstance = null;
+  function renderChart() {
+    const ctx = document.getElementById("chart").getContext("2d");
+
+    // Group by category
+    const categoryTotals = {};
+    expense.forEach((exp) => {
+      categoryTotals[exp.category] = (categoryTotals[exp.category] || 0) + exp.amount;
+    });
+
+    const labels = Object.keys(categoryTotals);
+    const data = Object.values(categoryTotals);
+
+    // Destroy old chart if exists
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
+
+    chartInstance = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: [
+              "#457b9d",
+              "#1d3557",
+              "#a8dadc",
+              "#e63946",
+              "#f1faee",
+            ],
+          },
+        ],
+      },
+    });
+  }
+
+  // ============== EXPORT AS CSV ==============
+  document.querySelector("#export-btn").addEventListener("click", () => {
+    let csv = "Name,Amount,Category,Date\n";
+    expense.forEach((exp) => {
+      csv += `${exp.name},${exp.amount},${exp.category},${exp.date}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "expenses.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+  </script>
+
+
+</body>
+</html>

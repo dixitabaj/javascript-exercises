@@ -1,4 +1,90 @@
-const products = [
+export function getProduct(productId){
+  let matchingItem;
+    products.forEach((productItem)=>{
+    if (productItem.id===productId){
+        matchingItem=productItem;
+    }
+    });
+
+    return matchingItem;
+  }
+
+
+  class Product{
+    id;
+    image;
+    name;
+    rating;
+    priceCents;
+    constructor(productDetails){
+      this.id=productDetails.id;
+      this.image=productDetails.image;
+      this.name=productDetails.name;
+      this.rating=productDetails.rating;
+      this.priceCents=productDetails.priceCents; 
+    }
+
+    getStarsURL(){
+      return `images/ratings/rating-${this.rating.stars*10}.png`;
+    }
+    getPrice(){
+      return `${(this.priceCents / 100).toFixed(2)}`;
+    }
+    extraInfo(){
+      return '';
+    }
+  }
+
+  class Clothing extends Product{
+    sizeChartLink;
+
+    constructor(productDetails){
+      super(productDetails); //calls the constructor of the parent class no need to re do this.id=id
+      this.sizeChartLink=productDetails.sizeChartLink;
+    }
+
+    extraInfo(){
+      return `<a href='${this.sizeChartLink}'>Size chart</a>`;
+    }
+  }
+  const tshirt=new Clothing({
+    id: "bc2847e9-5323-403f-b7cf-57fde044a955",
+    image: "images/products/men-cozy-fleece-zip-up-hoodie-red.jpg",
+    name: "Men's Full-Zip Hooded Fleece Sweatshirt",
+    rating: {
+      stars: 4.5,
+      count: 3157
+    },
+    priceCents: 2400,
+    keywords: [
+      "sweaters",
+      "hoodies",
+      "apparel",
+      "mens"
+    ],
+    sizeChartLink: 'images/js.code-workspace.png'
+  });
+
+  console.log(tshirt);
+  const product1=new Product({
+    id: "bc2847e9-5323-403f-b7cf-57fde044a955",
+    image: "images/products/men-cozy-fleece-zip-up-hoodie-red.jpg",
+    name: "Men's Full-Zip Hooded Fleece Sweatshirt",
+    rating: {
+      stars: 4.5,
+      count: 3157
+    },
+    priceCents: 2400,
+    keywords: [
+      "sweaters",
+      "hoodies",
+      "apparel",
+      "mens"
+    ]
+  });
+  console.log(product1.getPrice());
+  
+ export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
@@ -657,4 +743,11 @@ const products = [
       "mens"
     ]
   }
-];
+].map((productDetails)=>{
+  if(productDetails.type === 'clothing'){
+    return new Clothing(productDetails)
+  }
+  return new Product(productDetails);
+});
+
+console.log(products);

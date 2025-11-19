@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orders</title>
+  </head>
+  <body>
+    
+
+<link rel="stylesheet" href="inventory.css">
+<script src="inventory.js"></script>
+
+
+<div class="inventory-container">
+    <h2>Mini Inventory Tracker</h2>
+    <button class="add-btn" onclick="openAddProductPopup()">+ Add Product</button>
+    <input type="text" id="search-input" placeholder="Search products..." onkeyup="filterProducts()">
+
+    <table id="product-table" class="product-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>SKU</th>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JS will render rows here -->
+      </tbody>
+    </table>
+  </div>
+  <p class="details"></p>
+  
+  <!-- Add Product Popup -->
+  <div id="add-product-popup" class="popup" style="display:none;">
+    <h3>Add New Product</h3>
+    <input type="text" class="product-name" placeholder="Product Name">
+    <input type="text" class="product-sku" placeholder="SKU">
+    <input type="number" class="product-stock" placeholder="Stock">
+    <input type="number" class="product-price" placeholder="Price">
+    <div class="popup-actions">
+      <button class="save-btn" onclick="addProduct()">Save</button>
+      <button class="cancel-btn" onclick="closeAddProductPopup()">Cancel</button>
+    </div>
+  </div>
+
+  
+</body>
+</html>
